@@ -10,6 +10,7 @@ import Slider from "../components/utilities/Slider";
 import RecycleBin from "../components/apps/RecycleBin";
 import Apps from "../components/apps/Apps";
 import Torch from "../components/apps/Torch";
+import Outlook from "../components/apps/Outlook";
 import { motion } from "framer-motion";
 import { useRef } from "react";
 import appsData from "../data/data";
@@ -29,6 +30,7 @@ function Main() {
     vscode: false,
     recycle: false,
     app: false,
+    outlook: false,
   });
 
   const [aboutMe, setAboutMe] = useState(null);
@@ -44,6 +46,7 @@ function Main() {
       vscode: false,
       recycle: false,
       app: false,
+      outlook: false,
       [window]: !windows[window],
     });
 
@@ -68,7 +71,7 @@ function Main() {
     setTimeout(() => {
       setIsSleeping(false);
       setFadeOut(false);
-    }, 1000);
+    }, 10000);
   }
 
   const images = useMemo(
@@ -91,7 +94,7 @@ function Main() {
     return () => clearInterval(interval);
   }, [images.length]);
   return (
-    <>
+    <motion.div style={{ pointerEvents: 'auto' }}>
       {isSleeping && (
         <div
           className={`fixed top-0 left-0 w-full h-full bg-black transition-opacity duration-1000 ease-in-out ${
@@ -216,6 +219,11 @@ function Main() {
             bounds={bounds}
             input={input}
           />
+          <Outlook
+            isAppOpen={windows.outlook}
+            toggleOutlook={() => toggleWindow("outlook")}
+            bounds={bounds}
+          />
         </div>
         <Taskbar
           toggleStart={() => toggleWindow("start")}
@@ -228,7 +236,18 @@ function Main() {
         setIsMenuOpen={() => toggleWindow("menu")}
         toggleMenu={() => toggleWindow("menu")}
       />
-    </>
+      <div 
+        className="desktop-icon absolute left-[100px] top-[100px] flex flex-col items-center w-20 gap-1 p-1 select-none hover:bg-white/10 rounded cursor-pointer z-20"
+        onClick={() => toggleWindow("outlook")}
+      >
+        <img
+          src="https://laaouatni.github.io/w11CSS/images/outlook-icon.png"
+          alt="Outlook"
+          className="w-10 h-10"
+        />
+        <span className="text-white text-sm text-center">Outlook</span>
+      </div>
+    </motion.div>
   );
 }
 

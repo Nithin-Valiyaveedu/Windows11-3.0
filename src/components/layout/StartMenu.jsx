@@ -83,6 +83,13 @@ function StartMenu({
               </div>
               <div className="app-icon">
                 <img
+                  src="https://laaouatni.github.io/w11CSS/images/outlook-icon.png"
+                  alt="outlook icon"
+                />
+                <span>Outlook</span>
+              </div>
+              <div className="app-icon">
+                <img
                   src="https://laaouatni.github.io/w11CSS/images/calendar-icon.png"
                   alt="calendar icon"
                 />
