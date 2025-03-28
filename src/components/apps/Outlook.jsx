@@ -3,6 +3,7 @@ import Draggable from "react-draggable";
 
 function Outlook({ isAppOpen, toggleOutlook, bounds }) {
   const [selectedFolder, setSelectedFolder] = useState('inbox');
+  const [selectedEmail, setSelectedEmail] = useState(null);
   const [emails, setEmails] = useState([
     { 
       id: 1, 
@@ -10,10 +11,17 @@ function Outlook({ isAppOpen, toggleOutlook, bounds }) {
       subject: 'Welcome to Outlook', 
       date: '2023-07-20', 
       read: false,
-      attachments: [
-        { name: 'Welcome Guide.pdf', size: '2.3MB', icon: '📄' },
-        { name: 'Setup Instructions.docx', size: '1.1MB', icon: '📄' }
-      ]
+      content: `Dear User,
+
+Welcome to our Outlook clone! We're excited to have you on board.
+
+This is a demonstration of our email viewing capabilities. You can:
+- View email content
+- Switch between folders
+- See read/unread status
+
+Best regards,
+The Development Team`
     },
     { 
       id: 2, 
@@ -21,37 +29,22 @@ function Outlook({ isAppOpen, toggleOutlook, bounds }) {
       subject: 'Project Update', 
       date: '2023-07-19', 
       read: true,
-      attachments: [
-        { name: 'Q3 Report.xlsx', size: '3.4MB', icon: '📊' }
-      ]
+      content: `Hello Team,
+
+Here's the latest project update:
+1. Completed UI enhancements
+2. Added email viewing functionality
+3. Improved folder navigation
+
+Let's keep up the good work!
+Project Manager`
     }
   ]);
-
-  const renderAttachments = (attachments) => (
-    <div className="mt-2">
-      <div className="text-sm text-gray-500 mb-1">Attachments:</div>
-      <div className="flex flex-wrap gap-2">
-        {attachments.map((attachment, index) => (
-          <div
-            key={index}
-            className="flex items-center p-2 bg-gray-100 rounded-lg border border-gray-200 hover:bg-gray-200 cursor-pointer"
-            onClick={() => alert(`Downloading ${attachment.name}...`)}
-          >
-            <span className="mr-2">{attachment.icon}</span>
-            <div>
-              <div className="text-sm font-medium">{attachment.name}</div>
-              <div className="text-xs text-gray-500">{attachment.size}</div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
 
   return (
     <div className={`${isAppOpen ? "" : "hidden"} z-30 w-full h-screen pointer-events-none absolute`}>
       <Draggable handle=".title-bar" bounds={bounds}>
-        <div className="window bg-white h-[45rem] w-[70.5rem] rounded-xl overflow-hidden border-neutral-700 border-[1.5px] font-semibold pointer-events-auto">
+        <div className="window bg-white h-[45rem] w-[90rem] rounded-xl overflow-hidden border-neutral-700 border-[1.5px] font-semibold pointer-events-auto">
           <div className="title-bar flex justify-between items-center bg-neutral-800 text-white h-9 select-none">
             <div className="m-1 ml-4 font-normal">Outlook</div>
             <div className="flex">
@@ -88,14 +81,17 @@ function Outlook({ isAppOpen, toggleOutlook, bounds }) {
                         ? 'bg-blue-100 text-blue-800'
                         : 'text-gray-700 hover:bg-gray-200'
                     }`}
-                    onClick={() => setSelectedFolder(folder.toLowerCase())}
+                    onClick={() => {
+                      setSelectedFolder(folder.toLowerCase());
+                      setSelectedEmail(null);
+                    }}
                   >
                     {folder}
                   </div>
                 ))}
               </nav>
             </div>
-            <div className="flex-1 flex flex-col">
+            <div className="w-96 border-r border-gray-200 flex flex-col">
               <div className="border-b p-4">
                 <h2 className="text-lg font-semibold capitalize">{selectedFolder}</h2>
               </div>
@@ -103,7 +99,15 @@ function Outlook({ isAppOpen, toggleOutlook, bounds }) {
                 {emails.map(email => (
                   <div
                     key={email.id}
-                    className="flex items-center p-3 hover:bg-gray-50 border-b border-gray-100 cursor-pointer"
+                    className={`flex items-center p-3 hover:bg-gray-50 border-b border-gray-100 cursor-pointer ${
+                      selectedEmail?.id === email.id ? 'bg-blue-50' : ''
+                    }`}
+                    onClick={() => {
+                      setSelectedEmail(email);
+                      setEmails(prev => prev.map(e => 
+                        e.id === email.id ? {...e, read: true} : e
+                      ));
+                    }}
                   >
                     <div className="w-6 mr-3">
                       {!email.read && <div className="w-2 h-2 bg-blue-600 rounded-full"></div>}
@@ -111,7 +115,6 @@ function Outlook({ isAppOpen, toggleOutlook, bounds }) {
                     <div className="flex-1 min-w-0">
                       <div className="font-medium truncate">{email.from}</div>
                       <div className="text-sm text-gray-600 truncate">{email.subject}</div>
-                      {email.attachments && email.attachments.length > 0 && renderAttachments(email.attachments)}
                     </div>
                     <div className="text-sm text-gray-500 whitespace-nowrap ml-4">
                       {email.date}
@@ -119,6 +122,36 @@ function Outlook({ isAppOpen, toggleOutlook, bounds }) {
                   </div>
                 ))}
               </div>
+            </div>
+            <div className="flex-1 flex flex-col">
+              {selectedEmail ? (
+                <>
+                  <div className="border-b p-4">
+                    <h2 className="text-xl font-semibold">{selectedEmail.subject}</h2>
+                    <div className="text-sm text-gray-600 mt-1">
+                      From: <span className="font-medium">{selectedEmail.from}</span>
+                    </div>
+                    <div className="text-sm text-gray-500 mt-1">
+                      Date: {selectedEmail.date}
+                    </div>
+                  </div>
+                  <div className="flex-1 overflow-y-auto p-4 whitespace-pre-wrap">
+                    {selectedEmail.content}
+                  </div>
+                  <div className="border-t p-3 bg-gray-50">
+                    <button className="bg-blue-600 text-white px-4 py-2 rounded">
+                      Reply
+                    </button>
+                    <button className="ml-2 bg-gray-200 px-4 py-2 rounded">
+                      Forward
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <div className="flex items-center justify-center h-full text-gray-500">
+                  Select an email to view its content
+                </div>
+              )}
             </div>
           </div>
         </div>
