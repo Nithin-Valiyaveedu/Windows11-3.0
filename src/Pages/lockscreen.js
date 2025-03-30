@@ -46,11 +46,11 @@ function Lockscreen() {
         <Login />
       </div>
 
-      <Slider
+      {/* <Slider
         isMenuOpen={isMenuOpen}
         setIsMenuOpen={setIsMenuOpen}
         toggleMenu={toggleMenu}
-      />
+      /> */}
     </>
   );
 }
