@@ -310,6 +310,14 @@ const appsData = [
     subAction: "spotify",
     size: "w-10 h-10",
   },
+  {
+    id: 9,
+    name: "Outlook",
+    icon: "https://laaouatni.github.io/w11CSS/images/outlook-icon.png",
+    action: "outlook",
+    subAction: "outlook",
+    size: "w-10 h-10",
+  },
 ];
 
 // Export default data

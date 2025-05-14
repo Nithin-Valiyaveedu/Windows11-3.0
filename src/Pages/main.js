@@ -131,7 +131,7 @@ function Main() {
       <div className="relative h-screen" ref={constraintsRef}>
         <div className="relative h-full w-full top-0 left-0 z-10 text-white">
           <RightClick option={true} />
-          <div className="grid h-[80vh] grid-rows-8 gap-2 absolute top-2 left-2">
+          <div className="grid h-[90vh] grid-rows-8 gap-2 absolute top-4 left-2">
             {appsData.map((app, index) => (
               <motion.div
                 key={app.id}
@@ -141,7 +141,7 @@ function Main() {
                 className={`row-start-${index + 1}`}
               >
                 <div
-                  className="w-[5em] h-full flex flex-col justify-center items-center rounded-md hover:bg-white hover:bg-opacity-20 p-2"
+                  className="w-[5em] h-full flex flex-col justify-center items-center rounded-md hover:bg-white hover:bg-opacity-20 "
                   onDoubleClick={() => toggleWindow(app.action, app.subAction)}
                 >
                   <img
@@ -161,7 +161,7 @@ function Main() {
               </motion.div>
             ))}
           </div>
-          <div className="absolute right-3 top-2">
+          {/* <div className="absolute right-3 top-2">
             <div
               className="w-[5em] h-full flex-col justify-center items-center rounded-md hover:bg-white hover:bg-opacity-20 p-2 select-none hidden"
               onDoubleClick={() => toggleWindow("app", "terminal")}
@@ -175,7 +175,7 @@ function Main() {
                 Terminal
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
         <div
           className={`absolute top-0 flex justify-center items-center w-full h-full`}
@@ -231,12 +231,12 @@ function Main() {
           toggleBrowser={() => toggleWindow("browser")}
         />
       </div>
-      <Slider
+      {/* <Slider
         isMenuOpen={windows.menu}
         setIsMenuOpen={() => toggleWindow("menu")}
         toggleMenu={() => toggleWindow("menu")}
-      />
-      <div 
+      /> */}
+      {/* <div 
         className="desktop-icon absolute left-[100px] top-[100px] flex flex-col items-center w-20 gap-1 p-1 select-none hover:bg-white/10 rounded cursor-pointer z-20"
         onClick={() => toggleWindow("outlook")}
       >
@@ -246,7 +246,7 @@ function Main() {
           className="w-10 h-10"
         />
         <span className="text-white text-sm text-center">Outlook</span>
-      </div>
+      </div> */}
     </motion.div>
   );
 }
