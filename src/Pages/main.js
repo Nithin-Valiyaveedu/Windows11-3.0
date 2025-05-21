@@ -11,6 +11,7 @@ import RecycleBin from "../components/apps/RecycleBin";
 import Apps from "../components/apps/Apps";
 import Torch from "../components/apps/Torch";
 import Outlook from "../components/apps/Outlook";
+import Word from "../components/apps/Word";
 import { motion } from "framer-motion";
 import { useRef } from "react";
 import appsData from "../data/data";
@@ -31,6 +32,7 @@ function Main() {
     recycle: false,
     app: false,
     outlook: false,
+    word: false,
   });
 
   const [aboutMe, setAboutMe] = useState(null);
@@ -47,6 +49,7 @@ function Main() {
       recycle: false,
       app: false,
       outlook: false,
+      word: false,
       [window]: !windows[window],
     });
 
@@ -198,11 +201,6 @@ function Main() {
             aboutMe={aboutMe}
             bounds={bounds}
           />
-          <RecycleBin
-            isRecycleOpen={windows.recycle}
-            toggleRecycle={() => toggleWindow("recycle")}
-            bounds={bounds}
-          />
           <Calculator
             isAppOpen={windows.calculator}
             toggleCalculator={() => toggleWindow("calculator")}
@@ -213,15 +211,25 @@ function Main() {
             toggleVsCode={() => toggleWindow("vscode")}
             bounds={bounds}
           />
+          <RecycleBin
+            isAppOpen={windows.recycle}
+            toggleRecycle={() => toggleWindow("recycle")}
+            bounds={bounds}
+          />
           <Apps
             isAppOpen={windows.app}
-            toggleApp={(input) => toggleWindow("app", input)}
+            toggleApp={() => toggleWindow("app", input)}
             bounds={bounds}
             input={input}
           />
           <Outlook
             isAppOpen={windows.outlook}
             toggleOutlook={() => toggleWindow("outlook")}
+            bounds={bounds}
+          />
+          <Word
+            isAppOpen={windows.word}
+            toggleWord={() => toggleWindow("word")}
             bounds={bounds}
           />
         </div>

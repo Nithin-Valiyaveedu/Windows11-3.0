@@ -318,6 +318,13 @@ const appsData = [
     subAction: "outlook",
     size: "w-10 h-10",
   },
+  {
+    id: 10,
+    name: "Word",
+    icon: "/images/apps/word-placeholder.png", // Placeholder icon
+    action: "word",
+    size: "w-10 h-10",
+  },
 ];
 
 // Export default data
