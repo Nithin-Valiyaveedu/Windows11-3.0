@@ -6,7 +6,6 @@ import StartMenu from "../components/layout/StartMenu";
 import Browser from "../components/apps/Browser";
 import Calculator from "../components/apps/Calculator";
 import VsCode from "../components/apps/VsCode";
-import Slider from "../components/utilities/Slider";
 import RecycleBin from "../components/apps/RecycleBin";
 import Apps from "../components/apps/Apps";
 import Torch from "../components/apps/Torch";
@@ -97,7 +96,7 @@ function Main() {
     return () => clearInterval(interval);
   }, [images.length]);
   return (
-    <motion.div style={{ pointerEvents: 'auto' }}>
+    <motion.div style={{ pointerEvents: "auto" }}>
       {isSleeping && (
         <div
           className={`fixed top-0 left-0 w-full h-full bg-black transition-opacity duration-1000 ease-in-out ${

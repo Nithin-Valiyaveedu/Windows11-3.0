@@ -259,20 +259,20 @@ const appsData = [
     action: "browser",
     size: "w-18 h-18",
   },
-  {
-    id: 2,
-    name: "About Me",
-    icon: "/images/apps/folder.png",
-    action: "explorer",
-    size: "w-18 h-18",
-  },
-  {
-    id: 3,
-    name: "Recycle Bin",
-    icon: "/images/apps/recyclebin.png",
-    action: "recycle",
-    size: "w-14 h-14",
-  },
+  // {
+  //   id: 2,
+  //   name: "About Me",
+  //   icon: "/images/apps/folder.png",
+  //   action: "explorer",
+  //   size: "w-18 h-18",
+  // },
+  // {
+  //   id: 3,
+  //   name: "Recycle Bin",
+  //   icon: "/images/apps/recyclebin.png",
+  //   action: "recycle",
+  //   size: "w-14 h-14",
+  // },
   {
     id: 4,
     name: "Microsoft Edge",
@@ -294,14 +294,14 @@ const appsData = [
     action: "vscode",
     size: "w-8 h-8",
   },
-  {
-    id: 7,
-    name: "Emoji TicTacToe",
-    icon: "https://raw.githubusercontent.com/MishanPoudel/Emoji-TicTacToe/main/public/favicon.ico",
-    action: "app",
-    subAction: "emoji",
-    size: "w-10 h-10",
-  },
+  // {
+  //   id: 7,
+  //   name: "Emoji TicTacToe",
+  //   icon: "https://raw.githubusercontent.com/MishanPoudel/Emoji-TicTacToe/main/public/favicon.ico",
+  //   action: "app",
+  //   subAction: "emoji",
+  //   size: "w-10 h-10",
+  // },
   {
     id: 8,
     name: "Spotify",
@@ -313,7 +313,8 @@ const appsData = [
   {
     id: 9,
     name: "Outlook",
-    icon: "https://laaouatni.github.io/w11CSS/images/outlook-icon.png",
+    // icon: "https://laaouatni.github.io/w11CSS/images/outlook-icon.png",
+    icon: "/images/apps/email.png", // Placeholder icon
     action: "outlook",
     subAction: "outlook",
     size: "w-10 h-10",
@@ -321,7 +322,7 @@ const appsData = [
   {
     id: 10,
     name: "Word",
-    icon: "/images/apps/word-placeholder.png", // Placeholder icon
+    icon: "/images/apps/word.png",
     action: "word",
     size: "w-10 h-10",
   },

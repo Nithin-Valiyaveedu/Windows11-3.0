@@ -8,11 +8,11 @@ function Outlook({ isAppOpen, toggleOutlook, bounds }) {
   const [selectedEmail, setSelectedEmail] = useState(null);
   const [viewingAttachment, setViewingAttachment] = useState(null);
   const [emails, setEmails] = useState([
-    { 
-      id: 1, 
-      from: 'support@example.com', 
-      subject: 'Important: Security Update Required', 
-      date: '2023-07-20', 
+    {
+      id: 1,
+      from: 'support@example.com',
+      subject: 'Important: Security Update Required',
+      date: '2023-07-20',
       read: false,
       content: `Dear Valued User,
 
@@ -37,11 +37,11 @@ Security Team`,
         }
       ]
     },
-    { 
-      id: 2, 
-      from: 'hr@yourcompany.com', 
-      subject: 'Your Salary Adjustment', 
-      date: '2023-07-19', 
+    {
+      id: 2,
+      from: 'hr@yourcompany.com',
+      subject: 'Your Salary Adjustment',
+      date: '2023-07-19',
       read: true,
       content: `Dear Employee,
 
@@ -64,11 +64,11 @@ Human Resources`,
         }
       ]
     },
-    { 
-      id: 3, 
-      from: 'no-reply@service.com', 
-      subject: 'Your invoice is ready', 
-      date: '2023-07-18', 
+    {
+      id: 3,
+      from: 'no-reply@service.com',
+      subject: 'Your invoice is ready',
+      date: '2023-07-18',
       read: false,
       content: `Your invoice #INV-2023-987 is attached.
 
@@ -129,21 +129,20 @@ Thank you for your business!`,
                 {['Inbox', 'Sent Items', 'Drafts', 'Junk Email', 'Deleted Items'].map(folder => (
                   <div
                     key={folder}
-                    className={`p-2 rounded cursor-pointer flex items-center ${
-                      selectedFolder.toLowerCase() === folder.toLowerCase().replace(' ', '')
+                    className={`p-2 rounded cursor-pointer flex items-center ${selectedFolder.toLowerCase() === folder.toLowerCase().replace(' ', '')
                         ? 'bg-blue-100 text-blue-800 font-medium'
                         : 'text-gray-700 hover:bg-gray-200'
-                    }`}
+                      }`}
                     onClick={() => {
                       setSelectedFolder(folder.toLowerCase().replace(' ', ''));
                       setSelectedEmail(null);
                     }}
                   >
                     <span className="material-symbols-outlined mr-2 text-lg">
-                      {folder === 'Inbox' ? 'inbox' : 
-                       folder === 'Sent Items' ? 'send' :
-                       folder === 'Drafts' ? 'drafts' :
-                       folder === 'Junk Email' ? 'report' : 'delete'}
+                      {folder === 'Inbox' ? 'inbox' :
+                        folder === 'Sent Items' ? 'send' :
+                          folder === 'Drafts' ? 'drafts' :
+                            folder === 'Junk Email' ? 'report' : 'delete'}
                     </span>
                     {folder}
                   </div>
@@ -165,13 +164,12 @@ Thank you for your business!`,
                 {emails.map(email => (
                   <div
                     key={email.id}
-                    className={`flex items-start p-3 hover:bg-gray-50 border-b border-gray-100 cursor-pointer ${
-                      selectedEmail?.id === email.id ? 'bg-blue-50' : ''
-                    } ${!email.read ? 'font-semibold' : ''}`}
+                    className={`flex items-start p-3 hover:bg-gray-50 border-b border-gray-100 cursor-pointer ${selectedEmail?.id === email.id ? 'bg-blue-50' : ''
+                      } ${!email.read ? 'font-semibold' : ''}`}
                     onClick={() => {
                       setSelectedEmail(email);
-                      setEmails(prev => prev.map(e => 
-                        e.id === email.id ? {...e, read: true} : e
+                      setEmails(prev => prev.map(e =>
+                        e.id === email.id ? { ...e, read: true } : e
                       ));
                     }}
                   >
@@ -229,7 +227,7 @@ Thank you for your business!`,
                     <div className="prose max-w-none">
                       {selectedEmail.content}
                     </div>
-                    
+
                     {/* Attachments Section */}
                     {selectedEmail.attachments && selectedEmail.attachments.length > 0 && (
                       <div className="mt-8 border-t pt-6">
