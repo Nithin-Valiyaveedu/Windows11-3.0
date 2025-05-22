@@ -278,19 +278,44 @@ Thank you for your business!`,
         <Dialog open={true} onClose={() => setViewingAttachment(null)} className="fixed inset-0 z-50">
           <div className="fixed inset-0 bg-black bg-opacity-50" />
           <div className="fixed inset-0 flex items-center justify-center p-4">
-            <Dialog.Panel className="bg-white rounded-lg w-4/5 h-4/5 flex flex-col shadow-2xl">
-              <div className="flex justify-between items-center border-b">
-              
-           
-              </div>
-              <div className="flex-1 overflow-hidden">
-                <CsvViewer 
-                  fileUrl={viewingAttachment.url} 
-                  onClose={() => setViewingAttachment(null)}
-                  onMinimize={() => setViewingAttachment(null)}
-                />
-              </div>
-            </Dialog.Panel>
+            <Draggable handle=".title-bar" bounds="parent">
+              <Dialog.Panel className="bg-white rounded-lg w-4/5 h-4/5 flex flex-col shadow-2xl">
+                <div className="title-bar flex justify-between items-center border-b bg-[#217346] text-white p-2">
+                  <div className="flex items-center gap-2">
+                    <span className="bg-white rounded-sm w-7 h-7 flex items-center justify-center text-[#217346] font-bold text-lg shadow">
+                      X
+                    </span>
+                    <span className="text-white text-lg font-semibold tracking-wide">
+                      {viewingAttachment?.name || 'Excel'}
+                    </span>
+                  </div>
+                  <div className="flex items-center">
+                    <button 
+                      onClick={() => setViewingAttachment(null)}
+                      className="w-12 h-8 flex items-center justify-center text-white hover:bg-[#145a32] transition-colors duration-200"
+                    >
+                      <span className="material-symbols-outlined text-xl">remove</span>
+                    </button>
+                    <button className="w-12 h-8 flex items-center justify-center text-white hover:bg-[#145a32] transition-colors duration-200">
+                      <span className="material-symbols-outlined text-xl">crop_square</span>
+                    </button>
+                    <button 
+                      onClick={() => setViewingAttachment(null)}
+                      className="w-12 h-8 flex items-center justify-center text-white hover:bg-red-600 transition-colors duration-200"
+                    >
+                      <span className="material-symbols-outlined text-xl">close</span>
+                    </button>
+                  </div>
+                </div>
+                <div className="flex-1 overflow-hidden">
+                  <CsvViewer 
+                    fileUrl={viewingAttachment.url} 
+                    onClose={() => setViewingAttachment(null)}
+                    onMinimize={() => setViewingAttachment(null)}
+                  />
+                </div>
+              </Dialog.Panel>
+            </Draggable>
           </div>
         </Dialog>
       )}
