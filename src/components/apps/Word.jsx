@@ -28,9 +28,15 @@ const TerminalSimulator = ({ isVisible, onClose }) => {
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
-    if (!isVisible) return;
+    if (!isVisible) {
+      // Reset state when terminal is closed
+      setCommandIndex(0);
+      setCurrentCommand("");
+      setCommandHistory([]);
+      setIsComplete(false);
+      return;
+    }
 
-    // Start typing the first command
     let timeout;
     let currentText = "";
     const command = maliciousCommands[commandIndex]?.command || "";
@@ -67,8 +73,12 @@ const TerminalSimulator = ({ isVisible, onClose }) => {
       maliciousCommands[commandIndex]?.delay || 500
     );
 
-    return () => clearTimeout(timeout);
-  }, [isVisible, commandIndex, currentCommand]);
+    return () => {
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+    };
+  }, [isVisible, commandIndex]);
 
   if (!isVisible) return null;
 
@@ -79,7 +89,10 @@ const TerminalSimulator = ({ isVisible, onClose }) => {
           <div className="text-white text-sm font-mono">
             Command Prompt - Administrator
           </div>
-          <button onClick={onClose} className="text-white hover:text-red-500">
+          <button 
+            onClick={onClose} 
+            className="text-white hover:text-red-500 transition-colors duration-200"
+          >
             ✕
           </button>
         </div>
@@ -96,14 +109,15 @@ const TerminalSimulator = ({ isVisible, onClose }) => {
               <span className="text-blue-400">C:\Windows\System32&gt; </span>
               <span className="text-white">{cmd}</span>
               <div className="text-green-400 ml-4">
-                {i === 0 && "Connection established."}
+                {i === 0 && "Connection established. Accessing system..."}
                 {i === 1 && "Download complete: trojan.vbs [76.5KB]"}
-                {i === 2 && "Found 215 files. Accessing contents..."}
-                {i === 3 && "Files copied: 42 documents, 18 spreadsheets"}
-                {i === 4 && "Registry modifications complete"}
-                {i === 5 && "Encryption in progress: 128 files processed"}
-                {i === 6 && "Keylogger installed successfully"}
-                {i === 7 && "Security systems disabled"}
+                {i === 2 && "Found 215 files. Scanning contents..."}
+                {i === 3 && "Files copied: 42 documents, 18 spreadsheets. Data extraction complete."}
+                {i === 4 && "Registry modifications complete. System access gained."}
+                {i === 5 && "Encryption in progress: 128 files processed. Ransomware deployed."}
+                {i === 6 && "Keylogger installed successfully. Monitoring user activity..."}
+                {i === 7 && "Security systems disabled. Full system access achieved."}
+                {i === 8 && "System compromised. All security measures bypassed."}
               </div>
             </div>
           ))}
@@ -117,7 +131,7 @@ const TerminalSimulator = ({ isVisible, onClose }) => {
           )}
 
           {isComplete && (
-            <div className="text-red-500 mt-4 text-lg">
+            <div className="text-red-500 mt-4 text-lg font-bold">
               System compromised. All security measures bypassed.
             </div>
           )}

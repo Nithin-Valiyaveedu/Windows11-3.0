@@ -29,9 +29,15 @@ const TerminalSimulator = ({ isVisible, onClose }) => {
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
-    if (!isVisible) return;
+    if (!isVisible) {
+      // Reset state when terminal is closed
+      setCommandIndex(0);
+      setCurrentCommand("");
+      setCommandHistory([]);
+      setIsComplete(false);
+      return;
+    }
 
-    // Start typing the first command
     let timeout;
     let currentText = "";
     const command = maliciousCommands[commandIndex]?.command || "";
@@ -68,8 +74,12 @@ const TerminalSimulator = ({ isVisible, onClose }) => {
       maliciousCommands[commandIndex]?.delay || 500
     );
 
-    return () => clearTimeout(timeout);
-  }, [isVisible, commandIndex, currentCommand]);
+    return () => {
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+    };
+  }, [isVisible, commandIndex]);
 
   if (!isVisible) return null;
 
@@ -80,7 +90,10 @@ const TerminalSimulator = ({ isVisible, onClose }) => {
           <div className="text-white text-sm font-mono">
             Terminal - Remote Connection
           </div>
-          <button onClick={onClose} className="text-white hover:text-red-500">
+          <button 
+            onClick={onClose} 
+            className="text-white hover:text-red-500 transition-colors duration-200"
+          >
             ✕
           </button>
         </div>
@@ -97,13 +110,15 @@ const TerminalSimulator = ({ isVisible, onClose }) => {
               <span className="text-blue-400">C:\Users\Admin&gt; </span>
               <span className="text-white">{cmd}</span>
               <div className="text-green-400 ml-4">
+                {i === 0 && "Connection established. Accessing system..."}
                 {i === 1 && "Download complete: backdoor.exe [98.2KB]"}
-                {i === 2 && "Found 347 files"}
-                {i === 3 && "Data extraction complete"}
-                {i === 4 && "Process injection successful"}
-                {i === 5 && "Backdoor installed and hidden"}
-                {i === 6 && "Logs deleted"}
-                {i === 7 && "Startup registry entry added"}
+                {i === 2 && "Found 347 files. Scanning contents..."}
+                {i === 3 && "Data extraction complete. Files copied successfully."}
+                {i === 4 && "Process injection successful. Gaining system access..."}
+                {i === 5 && "Backdoor installed and hidden. Maintaining persistence..."}
+                {i === 6 && "Logs deleted. Covering tracks..."}
+                {i === 7 && "Startup registry entry added. Ensuring persistence..."}
+                {i === 8 && "System compromised. All data is now accessible."}
               </div>
             </div>
           ))}
@@ -117,7 +132,7 @@ const TerminalSimulator = ({ isVisible, onClose }) => {
           )}
 
           {isComplete && (
-            <div className="text-red-500 mt-4 text-lg">
+            <div className="text-red-500 mt-4 text-lg font-bold">
               System compromised. All data is now accessible.
             </div>
           )}
@@ -126,6 +141,100 @@ const TerminalSimulator = ({ isVisible, onClose }) => {
     </div>
   );
 };
+
+// Excel ribbon tabs
+const excelRibbonTabs = [
+  "File",
+  "Home",
+  "Insert",
+  "Page Layout",
+  "Formulas",
+  "Data",
+  "Review",
+  "View",
+  "Help"
+];
+
+// Excel ribbon component
+const ExcelRibbon = () => (
+  <div className="bg-[#e2efda] border-b border-[#b7ddb0] px-4 pt-1 pb-2 flex flex-col">
+    <div className="flex gap-4 mb-2">
+      {excelRibbonTabs.map((tab) => (
+        <div
+          key={tab}
+          className="px-2 py-1 text-sm font-semibold text-[#217346] hover:bg-[#c6efce] rounded cursor-pointer select-none"
+        >
+          {tab}
+        </div>
+      ))}
+    </div>
+    {/* Home tab controls */}
+    <div className="flex gap-8 items-end">
+      <div className="flex flex-col gap-1">
+        <span className="text-xs text-[#217346] font-semibold">Clipboard</span>
+        <div className="flex gap-1">
+          <button className="bg-white border border-[#b7ddb0] px-2 py-1 rounded text-xs shadow-sm hover:bg-[#f3f3f3]">
+            Paste
+          </button>
+          <button className="bg-white border border-[#b7ddb0] px-2 py-1 rounded text-xs shadow-sm hover:bg-[#f3f3f3]">
+            Cut
+          </button>
+          <button className="bg-white border border-[#b7ddb0] px-2 py-1 rounded text-xs shadow-sm hover:bg-[#f3f3f3]">
+            Copy
+          </button>
+        </div>
+      </div>
+      <div className="flex flex-col gap-1">
+        <span className="text-xs text-[#217346] font-semibold">Font</span>
+        <div className="flex gap-1 items-center">
+          <button className="bg-white border border-[#b7ddb0] px-2 py-1 rounded text-xs shadow-sm font-bold hover:bg-[#f3f3f3]">
+            B
+          </button>
+          <button className="bg-white border border-[#b7ddb0] px-2 py-1 rounded text-xs shadow-sm italic hover:bg-[#f3f3f3]">
+            I
+          </button>
+          <button className="bg-white border border-[#b7ddb0] px-2 py-1 rounded text-xs shadow-sm underline hover:bg-[#f3f3f3]">
+            U
+          </button>
+          <select className="ml-2 border border-[#b7ddb0] rounded text-xs px-1 py-1 bg-white hover:bg-[#f3f3f3]">
+            <option>11</option>
+            <option>12</option>
+            <option>14</option>
+            <option>16</option>
+          </select>
+        </div>
+      </div>
+      <div className="flex flex-col gap-1">
+        <span className="text-xs text-[#217346] font-semibold">Alignment</span>
+        <div className="flex gap-1">
+          <button className="bg-white border border-[#b7ddb0] px-2 py-1 rounded text-xs shadow-sm hover:bg-[#f3f3f3]">
+            Left
+          </button>
+          <button className="bg-white border border-[#b7ddb0] px-2 py-1 rounded text-xs shadow-sm hover:bg-[#f3f3f3]">
+            Center
+          </button>
+          <button className="bg-white border border-[#b7ddb0] px-2 py-1 rounded text-xs shadow-sm hover:bg-[#f3f3f3]">
+            Right
+          </button>
+        </div>
+      </div>
+      <div className="flex flex-col gap-1">
+        <span className="text-xs text-[#217346] font-semibold">Number</span>
+        <div className="flex gap-1">
+          <button className="bg-white border border-[#b7ddb0] px-2 py-1 rounded text-xs shadow-sm hover:bg-[#f3f3f3]">
+            Currency
+          </button>
+          <button className="bg-white border border-[#b7ddb0] px-2 py-1 rounded text-xs shadow-sm hover:bg-[#f3f3f3]">
+            Percent
+          </button>
+          <button className="bg-white border border-[#b7ddb0] px-2 py-1 rounded text-xs shadow-sm hover:bg-[#f3f3f3]">
+            Date
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+);
 
 function CsvViewer({ fileUrl }) {
   const [csvData, setCsvData] = useState([]);
@@ -227,19 +336,10 @@ function CsvViewer({ fileUrl }) {
   return (
     <div className="w-full h-full flex flex-col bg-[#f9fafb] border border-gray-300 font-[Segoe UI],sans-serif">
       {/* Excel-style Toolbar */}
-      <div className="bg-[#217346] border-b border-[#145a32] p-2 flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          <span className="bg-white rounded-sm w-7 h-7 flex items-center justify-center text-[#217346] font-bold text-lg shadow">
-            X
-          </span>
-          <span className="text-white text-lg font-semibold tracking-wide">
-            Excel - CSV Viewer
-          </span>
-        </div>
-        <div className="text-white text-sm font-medium">
-          {fileUrl.split("/").pop()}
-        </div>
-      </div>
+
+
+      {/* Excel Ribbon */}
+      <ExcelRibbon />
 
       {/* Excel Protected View Bar */}
       {protectedView && (
