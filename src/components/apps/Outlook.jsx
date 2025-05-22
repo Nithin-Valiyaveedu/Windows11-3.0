@@ -280,25 +280,15 @@ Thank you for your business!`,
           <div className="fixed inset-0 flex items-center justify-center p-4">
             <Dialog.Panel className="bg-white rounded-lg w-4/5 h-4/5 flex flex-col shadow-2xl">
               <div className="flex justify-between items-center border-b">
-                <div className="w-full bg-[#217346] border-b border-[#145a32] p-2 flex items-center">
-                  <div className="flex items-center gap-2">
-                    <span className="bg-white rounded-sm w-7 h-7 flex items-center justify-center text-[#217346] font-bold text-lg shadow">
-                      X
-                    </span>
-                    <span className="text-white text-lg font-semibold tracking-wide">
-                      Excel
-                    </span>
-                  </div>
-                </div>
-                <button
-                  onClick={() => setViewingAttachment(null)}
-                  className="p-2 hover:bg-gray-100 rounded-full"
-                >
-                  <span className="material-symbols-outlined">close</span>
-                </button>
+              
+           
               </div>
               <div className="flex-1 overflow-hidden">
-                <CsvViewer fileUrl={viewingAttachment.url} />
+                <CsvViewer 
+                  fileUrl={viewingAttachment.url} 
+                  onClose={() => setViewingAttachment(null)}
+                  onMinimize={() => setViewingAttachment(null)}
+                />
               </div>
             </Dialog.Panel>
           </div>

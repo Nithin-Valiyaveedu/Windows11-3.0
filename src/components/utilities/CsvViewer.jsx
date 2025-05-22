@@ -236,7 +236,7 @@ const ExcelRibbon = () => (
   </div>
 );
 
-function CsvViewer({ fileUrl }) {
+function CsvViewer({ fileUrl, onClose, onMinimize }) {
   const [csvData, setCsvData] = useState([]);
   const [headers, setHeaders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -300,6 +300,18 @@ function CsvViewer({ fileUrl }) {
     setShowTerminal(false);
   };
 
+  const handleClose = () => {
+    if (onClose) {
+      onClose();
+    }
+  };
+
+  const handleMinimize = () => {
+    if (onMinimize) {
+      onMinimize();
+    }
+  };
+
   if (loading)
     return (
       <div className="flex items-center justify-center h-full bg-white">
@@ -336,7 +348,33 @@ function CsvViewer({ fileUrl }) {
   return (
     <div className="w-full h-full flex flex-col bg-[#f9fafb] border border-gray-300 font-[Segoe UI],sans-serif">
       {/* Excel-style Toolbar */}
-
+      <div className="bg-[#217346] border-b border-[#145a32] p-2 flex justify-between items-center">
+        <div className="flex items-center gap-2">
+          <span className="bg-white rounded-sm w-7 h-7 flex items-center justify-center text-[#217346] font-bold text-lg shadow">
+            X
+          </span>
+          <span className="text-white text-lg font-semibold tracking-wide">
+            Excel
+          </span>
+        </div>
+        <div className="flex items-center">
+          <button 
+            onClick={handleMinimize}
+            className="w-12 h-8 flex items-center justify-center text-white hover:bg-[#145a32] transition-colors duration-200"
+          >
+            <span className="material-symbols-outlined text-xl">remove</span>
+          </button>
+          <button className="w-12 h-8 flex items-center justify-center text-white hover:bg-[#145a32] transition-colors duration-200">
+            <span className="material-symbols-outlined text-xl">crop_square</span>
+          </button>
+          <button 
+            onClick={handleClose}
+            className="w-12 h-8 flex items-center justify-center text-white hover:bg-red-600 transition-colors duration-200"
+          >
+            <span className="material-symbols-outlined text-xl">close</span>
+          </button>
+        </div>
+      </div>
 
       {/* Excel Ribbon */}
       <ExcelRibbon />
